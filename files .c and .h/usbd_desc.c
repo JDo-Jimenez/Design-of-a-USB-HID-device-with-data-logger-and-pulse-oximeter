@@ -33,7 +33,7 @@
 #include "usb_regs.h"
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
-  * @{
+  * *@{
   */
 
 
