@@ -1,4 +1,6 @@
-Estructura de archivos y de librerías en el proyecto.
+Not all the files are included, check at the end of this page.
+
+/*Estructura de archivos y de librerías en el proyecto.*/
 
 Se han incluido en el proyecto todos los archivos de librerías necesarios para realizar un
 dispositivo USB HID. Los archivos se han obtenido de las librerías CMSIS,
