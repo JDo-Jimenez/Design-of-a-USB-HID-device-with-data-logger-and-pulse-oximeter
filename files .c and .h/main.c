@@ -2,14 +2,14 @@
 /**
  *    IAR project for USB HID Device
  *
- *    @author     Juan Domingo Jiménez
-*    @email        juajimje@upv.es
+ *    @author     Juan Domingo JimÃ©nez
+*    @email        juajimje@gmail.com
  */
 /* Include core modules */
 #include "stm32f4xx.h"
 #include "stm32f4_discovery.h"
 #include "defines.h"
-#include "tm_stm32f4_usb_hid_device.h"
+#include "stm32f4_usb_hid_device.h"
  #include "tm_stm32f4_delay.h"
 #include "tm_stm32f4_disco.h"
 #include <stdio.h>
@@ -109,7 +109,7 @@ int main(void) {
        
     uint8_t already1 = 0, already2=0,flag = 0; //flags
        
-    TM_USB_HIDDEVICE_Keyboard_t Keyboard;  /* Set struct */
+    USB_HIDDEVICE_Keyboard_t Keyboard;  /* Set struct */
     SystemInit();   /* Initialize system */
     TM_DISCO_LedInit(); /* Initialize leds */
     TM_DISCO_ButtonInit(); /* Initialize button */
@@ -120,14 +120,14 @@ int main(void) {
     TM_GPIO_Init(GPIOE, GPIO_PIN_7, TM_GPIO_Mode_IN, TM_GPIO_OType_PP, TM_DISCO_BUTTON_PULL, TM_GPIO_Speed_Low);
     
     TM_DELAY_Init();  /* Initialize delay */
-    TM_USB_HIDDEVICE_Init();   /* Initialize USB HID Device */
-    TM_USB_HIDDEVICE_KeyboardStructInit(&Keyboard); /* Set default values for keyboard struct */
+    USB_HIDDEVICE_Init();   /* Initialize USB HID Device */
+    USB_HIDDEVICE_KeyboardStructInit(&Keyboard); /* Set default values for keyboard struct */
 
     USART_puts("introduce orden \n"); //Frase inicial en consola
     
     while (1) {            //==================================WHILE(1)=========================================/
         /* If we are connected and drivers are OK */
-        if (TM_USB_HIDDEVICE_GetStatus() == TM_USB_HIDDEVICE_Status_Connected) {
+        if (USB_HIDDEVICE_GetStatus() == USB_HIDDEVICE_Status_Connected) {
             /* Turn on green LED */
             TM_DISCO_LedOn(LED_GREEN);           
             
@@ -135,7 +135,7 @@ int main(void) {
                 
                 already1 = 1;
                 Keyboard.Key1 = tecla1;                                           
-                TM_USB_HIDDEVICE_KeyboardSend(&Keyboard);// Send keyboard report 
+                USB_HIDDEVICE_KeyboardSend(&Keyboard);// Send keyboard report 
                 
                 np1i++;//contador evento pulsar boton1
                 Tiempos[next_slot]=dms(); 
@@ -148,9 +148,9 @@ int main(void) {
             } else if (!TM_GPIO_GetInputPinValue(GPIOD, GPIO_PIN_14) && already1 == 1) { // Button1 release 
                 already1 = 0;
                /* Release all buttons*/ 
-                Keyboard.L_GUI = TM_USB_HIDDEVICE_Button_Released;    // No button 
+                Keyboard.L_GUI = USB_HIDDEVICE_Button_Released;    // No button 
                 Keyboard.Key1 = 0x00;                                 // No key 
-                TM_USB_HIDDEVICE_KeyboardSend(&Keyboard); // Send keyboard report 
+                USB_HIDDEVICE_KeyboardSend(&Keyboard); // Send keyboard report 
 
                 np1f++;
                 Tiempos[next_slot]=dms();
@@ -164,7 +164,7 @@ int main(void) {
 /*Boton2*/ if (TM_DISCO_ButtonPressed() && already2 == 0) { //Button2 on           
                 already2 = 1;
                 Keyboard.Key1 = tecla2;                                 
-                TM_USB_HIDDEVICE_KeyboardSend(&Keyboard); // Send keyboard report 
+                HIDDEVICE_KeyboardSend(&Keyboard); // Send keyboard report 
 
                 np2i++;
                 Tiempos[next_slot]=dms(); 
@@ -177,9 +177,9 @@ int main(void) {
             } else if (!TM_DISCO_ButtonPressed() && already2 == 1) { // Button2 release 
                 already2 = 0;
                 /* Release all buttons*/ 
-                Keyboard.L_GUI = TM_USB_HIDDEVICE_Button_Released;    // No button 
+                Keyboard.L_GUI = HIDDEVICE_Button_Released;    // No button 
                 Keyboard.Key1 = 0x00;                                 // No key 
-                TM_USB_HIDDEVICE_KeyboardSend(&Keyboard); // Send keyboard report 
+                USB_HIDDEVICE_KeyboardSend(&Keyboard); // Send keyboard report 
                 
                 np2f++;
                 Tiempos[next_slot]=dms(); 
@@ -259,7 +259,7 @@ int main(void) {
                    // /* Enable ADC3 */      ADC_Cmd(ADC3, ENABLE);
                     tf=dms();
                     Tcalculos= ti -tf;
-                    for( int k=2038; k<2048; k++){   //añadimos 10 muestras actuales
+                    for( int k=2038; k<2048; k++){   //aÃ±adimos 10 muestras actuales
                       testInput_f32_10khz[k] = ADC3ConvertedValue *3300/0xFFF;  //PC2 
                       tiempo2=TM_Time;
                       while(TM_Time-tiempo2<1);
