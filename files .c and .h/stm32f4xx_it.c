@@ -1,6 +1,6 @@
 /*******************************************************************************
   * @file    stm32f4xx_it.c
-  * @author  Juan Domingo Jiménez Jerez
+  * @author  Juan Domingo JimÃ©nez Jerez
   * @date    14-Mayo-2015
   * @brief   Main Interrupt Service Routines.
   *          This file provides all exceptions handler and peripherals interrupt
@@ -17,7 +17,6 @@
 #include "usb_bsp.h"
 #include "tm_stm32f4_delay.h"
 #include "core_cm4.h"
-//#include "tm_stm32f4_delay.c"  //contiene systick
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -214,11 +213,11 @@ void ejecuta_orden(volatile char *linea)
   int i=0;
   if(linea[0]=='s'){   //orden setkey
     while(linea[i]!=' ') i++;  
-    if(linea[i-1]=='1'){  //letra antes del espacio ¿tecla1?
+    if(linea[i-1]=='1'){  //letra antes del espacio Â¿tecla1?
       if((linea[i+1]=='0')&&(linea[i+2]=='x')) codificador_hex1(linea,i); //hexadecimal?
       else { codificador1(linea[i+1]);}  //enviamos la siguiente letra despues del espacio
       
-    }else if(linea[i-1]=='2'){ //¿tecla2?
+    }else if(linea[i-1]=='2'){ //Â¿tecla2?
       if((linea[i+1]=='0')&&(linea[i+2]=='x')) codificador_hex2(linea,i); //hexadecimal
       else {codificador2(linea[i+1]);}  //enviamos la siguiente letra despues del espacio
     }else{
@@ -239,7 +238,7 @@ void ejecuta_orden(volatile char *linea)
     while(linea[i]!=' ') i++;  
     int echo_anterior=echo;
     echo=49; //para que siempre muestre por pantalla si esta deshabilitado o habilitado; luego se cambia al correspondiente
-    if(linea[i+1]==48){ USART_puts("echo deshabilitado \n"); // el 0 de la consola aquí es 48
+    if(linea[i+1]==48){ USART_puts("echo deshabilitado \n"); // el 0 de la consola aquÃ­ es 48
         echo=linea[i+1];  }
     else if(linea[i+1]==49){ USART_puts("echo habilitado \n");// El 1 de la consola es 49
         echo=linea[i+1];   }
